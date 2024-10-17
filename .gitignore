@@ -2,4 +2,6 @@
 *.asv
 *.png
 *.fig
+*.zip
+*.rar
 /.idea

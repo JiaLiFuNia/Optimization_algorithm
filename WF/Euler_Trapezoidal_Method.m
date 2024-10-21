@@ -50,6 +50,7 @@ end
 [euler_u,tx_u] = figure6();
 
 %% plot
+close all;
 set(gcf,'Position',[200,100,800,600])
 
 subplot(3,2,1);
@@ -126,7 +127,7 @@ for i = 1:size(euler_u,1)
 end
 for i = 1:size(tx_u,1)
     tx_ = tx_u{i,1};
-    error = mean(abs(tx_(:,3)'-tx_u{i,2}));
+    error = mean(abs(tx_(:,1)'-tx_u{i,2}));
     plot(tx_u{i,3},error,'r.');
     hold on;
 end
@@ -139,21 +140,18 @@ ax = gca;
 ax.YAxis.Exponent = -3;
 set(gca,'Position',[0.55,0.06,0.43,0.24],'YMinorTick','on');
 
-saveas(figure(1), 'EulerAndTx', 'png');
+saveas(figure(1), 'figure1', 'png');
 
 %%
 function [euler_u,tx_u] = figure6(~)
-% clear;
-% close all;
-% format long;
 ut = @(t) exp(1/2*t);
 ftu = @(t,u) 1/2*u;
 u0 = 1;
-
+Node = 1500;
 % Euler
 euler_u = {};
 i = 0;
-for node = 10:2:2000
+for node = 10:2:Node
     i = i + 1;
     t = linspace(0,1,node);
     h = 1/(node-1);
@@ -169,7 +167,7 @@ end
 % 梯形法
 tx_u = {};
 i = 0;
-for node = 10:2:2000
+for node = 10:2:Node
     i = i + 1;
     t = linspace(0,1,node);
     h = 1/(node-1);

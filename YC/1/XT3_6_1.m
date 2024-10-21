@@ -98,6 +98,7 @@ for n = [10,100,1000,2000]
 end
 
 %% figure(1)
+f = figure(1);
 set(gcf,'Position',[100,200,800,450]);
 
 subplot(1,2,1);
@@ -125,6 +126,7 @@ h = legend({'$n=10$','$n=100$','$n=1000$','$n=2000$'});
 set(h,'Interpreter','latex');
 set(gca,'Position',[0.56,0.1,0.42,0.85]);
 hold off;
+saveas(f, '1', 'svg');
 
 %% figure(2)
 figure(2)

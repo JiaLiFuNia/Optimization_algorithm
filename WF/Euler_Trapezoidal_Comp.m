@@ -1,4 +1,5 @@
 function [euler_h,tx_h] = Euler_Trapezoidal_Comp(~)
+% clear;
 ut = @(t) exp(1/2*t);
 ftu = @(t,u) 1/2*u;
 u0 = 1;
@@ -72,8 +73,6 @@ for i = 1:size(tx_u,1)
         end
     end
 end
-
-pos = res{11};
+pos = res{1};
 tx_h = tx_u{pos(1),3};
 euler_h = euler_u{pos(2),3};
-end

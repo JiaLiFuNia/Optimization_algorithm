@@ -147,8 +147,11 @@ title('PMCEMC 格式');
 set(gca,'Position',[0.06,0.06,0.38,0.24],'YMinorTick','on');
 
 subplot(3,2,6);
-plot(t,three_un);
-hold on;
-plot(t,log10(abs(three_un-true_un)));
-hold off;
+plot(t,log10(abs([three_un,four_un,adams_un,pece_un]-true_un)));
+ylim([-12,-2]);
+ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
+xlabel('$t$','Interpreter','latex');
+legend({'三阶RK','四阶RK','Adams','PECE'},'Location','southeast','NumColumns',2);
 set(gca,'Position',[0.56,0.06,0.38,0.24],'YMinorTick','on');
+
+saveas(figure(1), 'figure2', 'png');

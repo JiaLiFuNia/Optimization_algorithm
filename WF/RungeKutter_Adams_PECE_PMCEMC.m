@@ -1,5 +1,4 @@
 clear;
-close all;
 format long;
 
 ut = @(t) sqrt(1+2*t);
@@ -10,7 +9,7 @@ h = 0.1;
 t = 0:h:1;
 true_un = ut(t)';
 
-%% 三阶
+%% 三阶RK
 three_un = u0*ones(length(t),1);
 
 for k = 1:length(t)-1
@@ -20,7 +19,7 @@ for k = 1:length(t)-1
     three_un(k+1) = three_un(k) + 1/9*h*(2*K1+3*K2+4*K3);
 end
 
-%% 四阶
+%% 四阶RK
 four_un = u0*ones(length(t),1);
 
 for k = 1:length(t)-1
@@ -79,6 +78,7 @@ end
 
 %% figure
 close all;
+figure(1);
 set(gcf,'Position',[200,100,800,600])
 
 subplot(3,2,1);
@@ -92,7 +92,7 @@ ylim([-12,-2]);
 xticks(0:0.1:1);
 ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-legend({'数值解','解析解','误差'},'Location','southeast');
+legend({'数值解','真解','误差'},'Location','southeast');
 title('三阶 Runge-Kutta 法');
 set(gca,'Position',[0.06,0.72,0.38,0.24],'YMinorTick','on');
 
@@ -107,7 +107,7 @@ ylim([-12,-2]);
 xticks(0:0.1:1);
 ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-legend({'数值解','解析解','误差'},'Location','southeast');
+legend({'数值解','真解','误差'},'Location','southeast');
 title('四阶 Runge-Kutta 法');
 set(gca,'Position',[0.56,0.72,0.38,0.24],'YMinorTick','on');
 
@@ -122,7 +122,7 @@ ylim([-12,-2]);
 xticks(0:0.1:1);
 ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-legend({'数值解','解析解','误差'},'Location','southeast');
+legend({'数值解','真解','误差'},'Location','southeast');
 title('Adams 显示格式');
 set(gca,'Position',[0.06,0.39,0.38,0.24],'YMinorTick','on');
 
@@ -137,7 +137,7 @@ ylim([-12,-2]);
 xticks(0:0.1:1);
 ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-legend({'数值解','解析解','误差'},'Location','southeast');
+legend({'数值解','真解','误差'},'Location','southeast');
 title('PECE 模式');
 set(gca,'Position',[0.56,0.39,0.38,0.24],'YMinorTick','on');
 
@@ -152,7 +152,7 @@ ylim([-12,-2]);
 xticks(0:0.1:1);
 ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-legend({'数值解','解析解','误差'},'Location','southeast');
+legend({'数值解','真解','误差'},'Location','southeast');
 title('PMCEMC 模式');
 set(gca,'Position',[0.06,0.06,0.38,0.24],'YMinorTick','on');
 

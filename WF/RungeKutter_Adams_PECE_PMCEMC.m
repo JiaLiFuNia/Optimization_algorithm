@@ -45,14 +45,8 @@ pece_un(1:4) = four_un(1:4);
 
 for k = 1:length(t)-4
     pece_un(k+4) = pece_un(k+3) + 1/24*h*(55*ftu(t(k+3),pece_un(k+3))-59*ftu(t(k+2),pece_un(k+2))+37*ftu(t(k+1),pece_un(k+1))-9*ftu(t(k),pece_un(k)));
-    fe = ftu(t(k+4),pece_un(k+4));
-    while 1
-        un4_new = pece_un(k+3) + 1/24*h*(9*fe+19*ftu(t(k+3),pece_un(k+3))-5*ftu(t(k+2),pece_un(k+2))+ftu(t(k+1),pece_un(k+1)));
-        if(abs(pece_un(k+4)-un4_new) < 1e-6)
-            break;
-        end
-        pece_un(k+4) = un4_new;
-    end
+    f0 = ftu(t(k+4),pece_un(k+4));
+    pece_un(k+4) = pece_un(k+3) + 1/24*h*(9*f0+19*ftu(t(k+3),pece_un(k+3))-5*ftu(t(k+2),pece_un(k+2))+ftu(t(k+1),pece_un(k+1)));
 end
 
 %% PMECME
@@ -62,18 +56,11 @@ pmecme_un(1:4) = four_un(1:4);
 un_m = 0;
 for k = 1:length(t)-4
     pmecme_un(k+4) = pmecme_un(k+3) + 1/24*h*(55*ftu(t(k+3),pmecme_un(k+3))-59*ftu(t(k+2),pmecme_un(k+2))+37*ftu(t(k+1),pmecme_un(k+1))-9*ftu(t(k),pmecme_un(k)));
-    un4 = pmecme_un(k+4);
-    while 1
-        un0_ = pmecme_un(k+4) + 251/270*un_m;
-        fu0_ = ftu(t(k+4),un0_);
-        un1 = pmecme_un(k+3) + 1/24*h*(9*fu0_+19*ftu(t(k+3),pmecme_un(k+3))-5*ftu(t(k+2),pmecme_un(k+2))+ftu(t(k+1),pmecme_un(k+1)));
-        pmecme_un(k+4) = un1 - 19/270*(un1-pmecme_un(k+4));
-        if(abs(un4-pmecme_un(k+4)) < 1e-6)
-            break;
-        end
-        un4 = pmecme_un(k+4);
-        un_m = un1 - pmecme_un(k+4);
-    end
+    un0_ = pmecme_un(k+4) + 251/270*un_m;
+    fu0_ = ftu(t(k+4),un0_);
+    un1 = pmecme_un(k+3) + 1/24*h*(9*fu0_+19*ftu(t(k+3),pmecme_un(k+3))-5*ftu(t(k+2),pmecme_un(k+2))+ftu(t(k+1),pmecme_un(k+1)));
+    un_m = un1 - pmecme_un(k+4);
+    pmecme_un(k+4) = un1 - 19/270*un_m;
 end
 
 %% figure
@@ -83,9 +70,11 @@ set(gcf,'Position',[200,100,800,600])
 
 subplot(3,2,1);
 yyaxis left
-plot(t,three_un,'.-',t,true_un);
+plot(t,three_un,'--','LineWidth',1.2);hold on;
+plot(t,true_un,'-');hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
+set(gca,'Position',[0.06,0.72,0.38,0.24],'YMinorTick','on');
 yyaxis right
 plot(t,log10(abs(three_un-true_un)));
 ylim([-12,-2]);
@@ -98,9 +87,11 @@ set(gca,'Position',[0.06,0.72,0.38,0.24],'YMinorTick','on');
 
 subplot(3,2,2);
 yyaxis left
-plot(t,four_un,'.-',t,true_un);
+plot(t,four_un,'--','LineWidth',1.2);hold on;
+plot(t,true_un,'-');hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
+set(gca,'Position',[0.56,0.72,0.38,0.24],'YMinorTick','on');
 yyaxis right
 plot(t,log10(abs(four_un-true_un)));
 ylim([-12,-2]);
@@ -113,9 +104,11 @@ set(gca,'Position',[0.56,0.72,0.38,0.24],'YMinorTick','on');
 
 subplot(3,2,3);
 yyaxis left
-plot(t,adams_un,'.-',t,true_un);
+plot(t,adams_un,'--','LineWidth',1.2);hold on;
+plot(t,true_un,'-');hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
+set(gca,'Position',[0.06,0.39,0.38,0.24],'YMinorTick','on');
 yyaxis right
 plot(t,log10(abs(adams_un-true_un)));
 ylim([-12,-2]);
@@ -128,9 +121,11 @@ set(gca,'Position',[0.06,0.39,0.38,0.24],'YMinorTick','on');
 
 subplot(3,2,4);
 yyaxis left
-plot(t,pece_un,'.-',t,true_un);
+plot(t,pece_un,'--','LineWidth',1.2);hold on;
+plot(t,true_un,'-');hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
+set(gca,'Position',[0.56,0.39,0.38,0.24],'YMinorTick','on');
 yyaxis right
 plot(t,log10(abs(pece_un-true_un)));
 ylim([-12,-2]);
@@ -143,9 +138,11 @@ set(gca,'Position',[0.56,0.39,0.38,0.24],'YMinorTick','on');
 
 subplot(3,2,5);
 yyaxis left
-plot(t,pmecme_un,'.-',t,true_un);
+plot(t,pmecme_un,'--','LineWidth',1.2);hold on;
+plot(t,true_un,'-');hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
+set(gca,'Position',[0.06,0.06,0.38,0.24],'YMinorTick','on');
 yyaxis right
 plot(t,log10(abs(pmecme_un-true_un)));
 ylim([-12,-2]);

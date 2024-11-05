@@ -66,15 +66,15 @@ end
 %% figure
 close all;
 figure(1);
-set(gcf,'Position',[200,100,800,600])
+set(gcf,'Position',[200,100,800,650])
 
 subplot(3,2,1);
 yyaxis left
-plot(t,three_un,'--','LineWidth',1.2);hold on;
-plot(t,true_un,'-');hold off;
+plot(t,three_un,'.-');hold on;
+plot(t,true_un);hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-set(gca,'Position',[0.06,0.72,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.72,0.38,0.23],'YMinorTick','on','FontSize',10);
 yyaxis right
 plot(t,log10(abs(three_un-true_un)));
 ylim([-12,-2]);
@@ -83,15 +83,15 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'数值解','真解','误差'},'Location','southeast');
 title('三阶 Runge-Kutta 法');
-set(gca,'Position',[0.06,0.72,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.72,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 subplot(3,2,2);
 yyaxis left
-plot(t,four_un,'--','LineWidth',1.2);hold on;
-plot(t,true_un,'-');hold off;
+plot(t,four_un,'.-');hold on;
+plot(t,true_un);hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-set(gca,'Position',[0.56,0.72,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.56,0.72,0.38,0.23],'YMinorTick','on','FontSize',10);
 yyaxis right
 plot(t,log10(abs(four_un-true_un)));
 ylim([-12,-2]);
@@ -100,15 +100,15 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'数值解','真解','误差'},'Location','southeast');
 title('四阶 Runge-Kutta 法');
-set(gca,'Position',[0.56,0.72,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.56,0.72,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 subplot(3,2,3);
 yyaxis left
-plot(t,adams_un,'--','LineWidth',1.2);hold on;
-plot(t,true_un,'-');hold off;
+plot(t,adams_un,'.-');hold on;
+plot(t,true_un);hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-set(gca,'Position',[0.06,0.39,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.39,0.38,0.23],'YMinorTick','on','FontSize',10);
 yyaxis right
 plot(t,log10(abs(adams_un-true_un)));
 ylim([-12,-2]);
@@ -117,15 +117,15 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'数值解','真解','误差'},'Location','southeast');
 title('Adams 显示格式');
-set(gca,'Position',[0.06,0.39,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.39,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 subplot(3,2,4);
 yyaxis left
-plot(t,pece_un,'--','LineWidth',1.2);hold on;
-plot(t,true_un,'-');hold off;
+plot(t,pece_un,'.-');hold on;
+plot(t,true_un);hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-set(gca,'Position',[0.56,0.39,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.56,0.39,0.38,0.23],'YMinorTick','on','FontSize',10);
 yyaxis right
 plot(t,log10(abs(pece_un-true_un)));
 ylim([-12,-2]);
@@ -134,15 +134,15 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'数值解','真解','误差'},'Location','southeast');
 title('PECE 模式');
-set(gca,'Position',[0.56,0.39,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.56,0.39,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 subplot(3,2,5);
 yyaxis left
-plot(t,pmecme_un,'--','LineWidth',1.2);hold on;
-plot(t,true_un,'-');hold off;
+plot(t,pmecme_un,'.-');hold on;
+plot(t,true_un);hold off;
 ylabel('$u$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
-set(gca,'Position',[0.06,0.06,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.06,0.38,0.23],'YMinorTick','on','FontSize',10);
 yyaxis right
 plot(t,log10(abs(pmecme_un-true_un)));
 ylim([-12,-2]);
@@ -151,7 +151,7 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'数值解','真解','误差'},'Location','southeast');
 title('PMCEMC 模式');
-set(gca,'Position',[0.06,0.06,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.06,0.06,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 subplot(3,2,6);
 plot(t,log10(abs([three_un,four_un,adams_un,pece_un,pmecme_un]-true_un)));
@@ -161,6 +161,7 @@ ylabel('$log_{10}(|u(t)-u_t|)$',"Interpreter","latex");
 xlabel('$t$','Interpreter','latex');
 legend({'三阶RK';'四阶RK';'Adams';'PECE';'PMCEMC'},'Location','southeast','NumColumns',3);
 title('五种方法的误差对比')
-set(gca,'Position',[0.56,0.06,0.38,0.24],'YMinorTick','on');
+set(gca,'Position',[0.56,0.06,0.38,0.23],'YMinorTick','on','FontSize',10);
 
 saveas(figure(1), 'figure2', 'png');
+print('figure2.1.png','-dpng','-r600');

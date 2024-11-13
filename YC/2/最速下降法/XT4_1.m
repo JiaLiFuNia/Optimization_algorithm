@@ -3,18 +3,24 @@ clear;
 close all;
 format long;
 
+load('k4_1.mat');
+load('time4_1.mat')
+
 eps = 1e-4;
 
-for n = [10,100,1000,2000,5000,10000]
+i = 0;
+for n = [10,100]
 
+    tic;
     x0 = 0.1*ones(n,1);
+    x0(1:2) = [2.8,-2.8];
     fx = @(x) fun(x,n);
     gfx = @(x) gradient1(x,n); % 梯度
     Gfx = @(x) hessian1(x,n); % Hessian矩阵
 
     k = 0;
     ds_x = x0;
-    while(1)
+    while 1
         gk = gfx(ds_x);
         if(norm(gk) <= eps)
             break;
@@ -36,11 +42,17 @@ for n = [10,100,1000,2000,5000,10000]
     end
     fprintf("迭代次数：%d\n",k);
     fprintf("最小点：%s\n", mat2str(ds_x));
-    fprintf("最小值：%f\n\n", fx(ds_x));
-   
-end
+    fprintf("最小值：%f\n", fx(ds_x));
 
-%% 
+    i = i + 1;
+    K(2,i) = k;
+    TIME(2,i) = toc;
+    fprintf("迭代时间：%f\n\n", TIME(2,i));
+end
+save('k4_1.mat',"K");
+save('time4_1.mat',"TIME");
+
+%%
 function fx = fun(x,n)
 fx = (x(1)-3)^2;
 for i = 2:n

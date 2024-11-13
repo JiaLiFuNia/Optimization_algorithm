@@ -3,9 +3,14 @@ clear;
 close all;
 format long;
 
+load('k4_1.mat');
+load('time4_1.mat')
+
 eps = 1e-4;
 
-for n = [10,100,1000,2000,5000,10000]
+i = 0;
+for n = [10,100]
+    tic;
 
     x0 = 0.01*ones(n,1);
     fx = @(x) fun(x,n);
@@ -26,7 +31,14 @@ for n = [10,100,1000,2000,5000,10000]
     fprintf("迭代次数：%d\n",k);
     fprintf("极小点：%s\n",mat2str(double(nd_x)));
     fprintf("极小值：%f\n",fx(nd_x));
+
+    i = i + 1;
+    K(1,i) = k;
+    TIME(1,i) = toc;
+    fprintf("迭代时间：%f\n\n", TIME(2,i));
 end
+save('k4_1.mat',"K");
+save('time4_1.mat',"TIME");
 
 %% 
 function fx = fun(x,n)

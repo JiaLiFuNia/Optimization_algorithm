@@ -1,4 +1,4 @@
-%% FR共轭梯度法
+%% 牛顿-最速混合法
 clear;
 close all;
 format long;
@@ -6,54 +6,50 @@ format long;
 load('k4_3.mat');
 load('time4_3.mat')
 
-eps = 1e-6;
-delta = 0.5;
-sigma = 0.4;
+eps = 1e-4;
 
 i = 0;
 for n = [10,100,1000,2000]
+
     tic;
     fx = @(x) fun(x,n);
     gx = @(x) gradient1(x,n);
     hx = @(x) hessian1(x,n);
-    x0 = 2*ones(n,1);
-  
-    k = 0;
-    ge_x = x0;
-    gk = [];
-    dk = [];
+    x0 = ones(n,1);
 
+    k = 0;
+    ds_x = x0;
     while 1
-        gk(:,k+1) = gx(ge_x);
-        if(norm(gk(:,k+1)) <= eps)
+        gk = gx(ds_x);
+        if(norm(gk) <= eps)
             break;
         end
-        if k == 0
-            dk(:,k+1) = -gk(:,k+1);
-        else
-            beta_k = gk(:,k+1)'*gk(:,k+1)/(gk(:,k)'*gk(:,k));
-            dk(:,k+1) = -gk(:,k+1) + beta_k*dk(:,k);
+        Gk = hx(ds_x);
+        dk = Gk\(-gk);
+        if(gk'*dk >=0)
+            dk = -gk;
         end
 
+        beta = 0.5;
+        sigma = 0.3;
         m = 0;
         while 1
-            if(fx(ge_x+delta^m*dk(:,k+1)) <= fx(ge_x)+sigma*delta^m*gk(:,k+1)'*dk(:,k+1))
+            if(fx(ds_x+beta^m*dk) <= fx(ds_x)+sigma*beta^m*gk'*dk)
                 mk = m;
                 break;
             end
             m = m + 1;
         end
-
-        ge_x = ge_x + delta^mk*dk(:,k+1);
+        ds_x = ds_x + beta^mk*dk;
         k = k + 1;
     end
     fprintf("迭代次数：%d\n",k);
-    fprintf("极小点：%s\n",mat2str(double(ge_x)));
-    fprintf("极小值：%f\n",fx(ge_x));
-
+    fprintf("极小点：%s\n",mat2str(double(ds_x)));
+    fprintf("极小值：%f\n",fx(ds_x));
+    
     i = i + 1;
-    K(4,i) = k;
-    TIME(4,i) = toc;
+    K(2,i) = k;
+    TIME(2,i) = toc;
     fprintf("迭代时间：%f\n\n", TIME(2,i));
 end
 save('k4_3.mat',"K");

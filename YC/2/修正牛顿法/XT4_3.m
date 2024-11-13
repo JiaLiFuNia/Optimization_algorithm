@@ -3,20 +3,19 @@ clear;
 close all;
 format long;
 
-load('k4_1.mat');
-load('time4_1.mat')
+load('k4_3.mat');
+load('time4_3.mat')
 
 eps = 1e-4;
 
 i = 0;
-for n = [10,100]
+for n = [10,100,1000,2000]
 
     tic;
-
     fx = @(x) fun(x,n);
     gx = @(x) gradient1(x,n);
     hx = @(x) hessian1(x,n);
-    x0 = 0.01*ones(n,1);
+    x0 = 1.5*ones(n,1);
 
     k = 0;
     delta = 0.5;
@@ -53,51 +52,39 @@ for n = [10,100]
     TIME(5,i) = toc;
     fprintf("迭代时间：%f\n\n", TIME(2,i));
 end
-save('k4_1.mat',"K");
-save('time4_1.mat',"TIME");
-
+save('k4_3.mat',"K");
+save('time4_3.mat',"TIME");
 
 %%
 function fx = fun(x,n)
-fx = (x(1)-3)^2;
-for i = 2:n
-    fx = fx + (x(1) - 3 - 2*sum(x(1:i))^2)^2;
+fx = 0;
+for i = 1:n-1
+    fx = fx+cos(-0.5*x(i+1)+x(i)^2);
 end
 end
 
-function g = gradient1(x,n)
-g = zeros(n,1);
-g(1) = 2 * (x(1) - 3);
-for i = 2:n
-    temp = 2 * sum(x(1:i))^2 - x(1) + 3;
-    g(1) = g(1) + 2 * temp * (4*sum(x(1:i))-1);
-end
-for k = 2:n % 每一个xi
-    for i = k:n
-        temp = 2 * sum(x(1:i))^2 - x(1) + 3;
-        g(k) = g(k) + 2 * temp * 4 * sum(x(1:i));
+function grad = gradient1(x,n)
+grad = zeros(n,1);
+for i = 1:n
+    if i < n
+        grad(i) =(-2)*x(i)*sin(x(i)^2-0.5*x(i+1));
+    end
+    if i > 1
+        grad(i) = grad(i)+(0.5)*sin(x(i-1)^2-0.5*x(i));
     end
 end
 end
 
 function H = hessian1(x,n)
-H = zeros(n, n);
-H(1,1) = 2;
-for i = 2:n
-    H(1,1) = H(1,1) + 16*sum(x(1:i))^2 + 2*(4*sum(x(1:i))-1)^2 - 8*x(1) + 24;
-end
+H = zeros(n,n);
 for i = 1:n
-    for j = 1:n
-        if i == 1 && j == 1
-            continue;
-        end
-        for m = max(i,j):n
-            if i == 1 || j == 1 % 第1行和第1列并排除H(1,1)
-                H(i,j) = H(i,j) + 16*sum(x(1:m))^2 + 8*sum(x(1:m))*(4*sum(x(1:m))-1) - 8*x(1) + 24;
-            else
-                H(i,j) = H(i,j) + 48*sum(x(1:m))^2 - 8*x(1) + 24;
-            end
-        end
+    if i < n
+        H(i,i) = (-2)*sin(x(i)^2-0.5*x(i+1))-4*x(i)^2*cos(x(i)^2-0.5*x(i+1));
+        H(i,i+1) = x(i)*cos(x(i)^2-0.5*x(i+1));                 
+    end
+    if i > 1
+        H(i,i) = H(i,i)-0.25*cos(x(i-1)^2-0.5*x(i));
+        H(i,i-1) = H(i-1,i);  
     end
 end
 end

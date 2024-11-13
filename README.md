@@ -20,6 +20,10 @@
 ### 2 、牛顿法与最速下降法
 - #### 牛顿法 [SF3_2](./YC/1/SF3_2.m)、[其余](./YC/1/)
 - #### 最速下降法 [SF3_1](./YC/1/SF3_1.m)、[其余](./YC/1/)
+- #### 牛顿-最速下降法混合算法
+- #### 修正牛顿法
+- #### FR共轭梯度法
+- #### 拟牛顿法
   
 ***
 
@@ -27,4 +31,8 @@
 ### 1、 常微分方程初值问题的数值解法
 - #### Euler法 [Euler_Trapezoidal Method](./WF/Euler_Trapezoidal%20Method.m)
 - #### 梯形法 [Euler_Trapezoidal Method](./WF/Euler_Trapezoidal%20Method.m)
-- #### 龙格库塔法
+- #### 三阶龙格库塔法
+- #### 四阶龙格库塔法
+- #### Adams（显示格式）
+- #### PECE 模式
+- #### PMECME 模式

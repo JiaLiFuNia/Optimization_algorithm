@@ -1,7 +1,4 @@
 # 《最优化方法及其Matlab程序设计》与《微分方程数值方法》相关算法（Matlab）
-> 说明：
-> 
-> 以下算法均通过例题体现
 > 
 > 参考书目：
 > 
@@ -29,10 +26,10 @@
 
 ## 《微分方程数值方法》
 ### 1、 常微分方程初值问题的数值解法
-- #### Euler法 [Euler_Trapezoidal Method](./WF/Euler_Trapezoidal%20Method.m)
-- #### 梯形法 [Euler_Trapezoidal Method](./WF/Euler_Trapezoidal%20Method.m)
-- #### 三阶龙格库塔法
-- #### 四阶龙格库塔法
-- #### Adams（显示格式）
-- #### PECE 模式
-- #### PMECME 模式
+- #### Euler法 [Euler_Method](./WF/Euler_Trapezoidal_Method.m)
+- #### 梯形法 [Trapezoidal_Method](./WF/Euler_Trapezoidal_Method.m)
+- #### 三阶龙格库塔法 [Runge Kutter](./WF/RungeKutter_Adams_PECE_PMCEMC.m)
+- #### 四阶龙格库塔法 [Runge Kutter](./WF/RungeKutter_Adams_PECE_PMCEMC.m)
+- #### Adams（显示格式） [Adams](./WF/RungeKutter_Adams_PECE_PMCEMC.m)
+- #### PECE 模式 [PECE](./WF/RungeKutter_Adams_PECE_PMCEMC.m)
+- #### PMECME 模式 [PMECME](./WF/RungeKutter_Adams_PECE_PMCEMC.m)

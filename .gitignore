@@ -1,7 +1,9 @@
 *.docx
 *.asv
-*.png
 *.fig
 *.zip
 *.rar
+*.xlsx
 /.idea
+/.stfolder
+/.stversions

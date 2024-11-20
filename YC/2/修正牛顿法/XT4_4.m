@@ -3,14 +3,21 @@ clear;
 close all;
 format long;
 
-eps = 1e-6;
+load('k4_4.mat');
+load('time4_4.mat')
 
-for n = [10,100,1000,2000,5000,10000]
+eps = 1e-4;
+
+i = 0;
+for n = [10,100,1000,2000]
+    for x = 2.40:0.01:2.49
+
+    tic;
 
     fx = @(x) fun(x,n);
     gx = @(x) gradient1(x,n);
     hx = @(x) hessian1(x,n);
-    x0 = 2*ones(n,1);
+    x0 = x*ones(n,1);
 
     k = 0;
     delta = 0.5;
@@ -42,7 +49,15 @@ for n = [10,100,1000,2000,5000,10000]
     fprintf("极小点：%s\n",mat2str(double(nd_x)));
     fprintf("极小值：%f\n",fx(nd_x));
 
+    i = i + 1;
+    K(5,i) = k;
+    TIME(5,i) = toc;
+    fprintf("迭代时间：%f\n\n", TIME(2,i));
+    end
+    i = i + 1;
 end
+save('k4_4.mat',"K");
+save('time4_4.mat',"TIME");
 
 %% 
 function fx = fun(x,n)

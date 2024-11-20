@@ -163,5 +163,4 @@ legend({'三阶RK';'四阶RK';'Adams';'PECE';'PMCEMC'},'Location','southeast','N
 title('五种方法的误差对比')
 set(gca,'Position',[0.56,0.06,0.38,0.23],'YMinorTick','on','FontSize',10);
 
-saveas(figure(1), 'figure2', 'png');
 print('figure2.1.png','-dpng','-r600');

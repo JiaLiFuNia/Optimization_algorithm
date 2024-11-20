@@ -3,16 +3,11 @@ clear;
 close all;
 format long;
 
-load('k4_3.mat');
-load('time4_3.mat')
-
 eps = 1e-4;
 
-i = 0;
-for n = [10,100,1000,2000]
+for n = [10,100,1000,2000,5000,10000]
 
-    tic;
-    x0 = abs(rand(n,1)+2);
+    x0 = 0.1*ones(n,1);
     fx = @(x) fun(x,n);
     gfx = @(x) gradient1(x,n); % 梯度
     Gfx = @(x) hessian1(x,n); % Hessian矩阵
@@ -43,44 +38,34 @@ for n = [10,100,1000,2000]
     fprintf("最小点：%s\n", mat2str(ds_x));
     fprintf("最小值：%f\n\n", fx(ds_x));
    
-    i = i + 1;
-    K(3,i) = k;
-    TIME(3,i) = toc;
-    fprintf("迭代时间：%f\n\n", TIME(2,i));
 end
-save('k4_3.mat',"K");
-save('time4_3.mat',"TIME");
 
 %% 
 function fx = fun(x,n)
-fx = 0;
-for i = 1:n-1
-    fx = fx+cos(-0.5*x(i+1)+x(i)^2);
+fx = (x(1)-5)^2;
+for i = 2:n
+    fx = fx + (sum(x(1:i))-1)^2;
 end
 end
 
-function grad = gradient1(x,n)
-grad = zeros(n,1);
-for i = 1:n
-    if i < n
-        grad(i) =(-2)*x(i)*sin(x(i)^2-0.5*x(i+1));
-    end
-    if i > 1
-        grad(i) = grad(i)+(0.5)*sin(x(i-1)^2-0.5*x(i));
+function g = gradient1(x,n)
+g = zeros(n,1);
+g(1) = 2 * (x(1) - 5);
+for i = 2:n
+    g(1) = g(1) + 2*sum(x(1:i)) - 2;
+end
+for k = 2:n % 每一个xi
+    for i = k:n
+        g(k) = g(k) + 2*sum(x(1:i)) - 2;
     end
 end
 end
 
 function H = hessian1(x,n)
-H = zeros(n,n);
+H = zeros(n, n);
 for i = 1:n
-    if i < n
-        H(i,i) = (-2)*sin(x(i)^2-0.5*x(i+1))-4*x(i)^2*cos(x(i)^2-0.5*x(i+1));
-        H(i,i+1) = x(i)*cos(x(i)^2-0.5*x(i+1));                 
-    end
-    if i > 1
-        H(i,i) = H(i,i)-0.25*cos(x(i-1)^2-0.5*x(i));
-        H(i,i-1) = H(i-1,i);  
+    for j = 1:n
+        H(i, j) = 2*(n-max(i,j)+1);
     end
 end
 end
